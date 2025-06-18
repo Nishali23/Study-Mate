@@ -28,7 +28,7 @@ export default function OnboardingCard({
   return (
     <SafeAreaView className="bg-secondry h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
-        <View className="w-full flex items-center h-full pt-8 px-12">
+        <View className="w-full flex items-center justify-center h-full pt-8 px-12">
           <Image
             source={image}
             className="w-96 h-96 mb-4 rounded-lg"
@@ -36,10 +36,10 @@ export default function OnboardingCard({
           />
 
           <View className="bg-primary p-6 rounded-xl shadow-lg w-full">
-            <Text className="text-white text-3xl font-extrabold text-center mb-5">
+            <Text className="text-secondry text-3xl font-extrabold text-center mb-5">
               {title}
             </Text>
-            <Text className="text-white text-lg text-center mb-4">
+            <Text className="text-secondry text-lg text-center mb-4">
               {description}
             </Text>
 
@@ -47,7 +47,7 @@ export default function OnboardingCard({
               {[0, 1, 2].map((i) => (
                 <View
                   key={i}
-                  className={`w-2 h-2 bg-white rounded-full ${
+                  className={`w-2 h-2 bg-secondry rounded-full ${
                     i === dotsIndex ? "" : "opacity-50"
                   }`}
                 />
@@ -57,7 +57,7 @@ export default function OnboardingCard({
             {buttons.map((btn, i) => (
               <TouchableOpacity
                 key={i}
-                className="bg-white px-6 py-3 rounded-2xl mb-4"
+                className="bg-secondry px-6 py-3 rounded-2xl mb-4"
                 onPress={btn.action}
               >
                 <Text className="text-primary text-xl font-bold text-center">
@@ -71,7 +71,7 @@ export default function OnboardingCard({
                 className="flex-row justify-center gap-2"
                 onPress={() => router.push("/auth/signin")}
               >
-                <Text className="text-white text-base">Skip</Text>
+                <Text className="text-secondry text-base">Skip</Text>
                 <AntDesign name="arrowright" size={20} color="white" />
               </TouchableOpacity>
             )}

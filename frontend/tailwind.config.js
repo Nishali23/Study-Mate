@@ -9,6 +9,7 @@ module.exports = {
         third: "#f5f5f5",
         fourth: "gray",
         fifth: "#F58A07",
+        sixth: "black",
       },
       spacing: {
         80: "20rem", // 320px
