@@ -47,6 +47,7 @@ export default function Onboarding() {
         width={width}
         height={height}
         data={slides}
+        loop={false}
         scrollAnimationDuration={400}
         renderItem={({ item, index }) => (
           <OnboardingCard
@@ -78,7 +79,7 @@ export default function Onboarding() {
           />
         )}
       />
-      <StatusBar backgroundColor="#161622" style="light" />
+      <StatusBar style="light" />
     </>
   );
 }
