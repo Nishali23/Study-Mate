@@ -6,15 +6,53 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  TextInputProps,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import { Feather, FontAwesome } from "@expo/vector-icons";
+import axios from "axios";
+import { Alert } from "react-native";
 
 export default function Signup() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post(
+        "http://172.20.10.3:3000/api/v1/auth/signup",
+        {
+          name,
+          email,
+          password,
+        }
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        Alert.alert("Signup Successful", "Check your email for OTP.", [
+          {
+            text: "OK",
+            onPress: () =>
+              router.push({ pathname: "/auth/sendOtp", params: { email } }),
+          },
+        ]);
+      } else {
+        Alert.alert(
+          "Signup Failed",
+          response.data.message || "Something went wrong"
+        );
+      }
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert(
+        "Error",
+        error.response?.data?.message || "Something went wrong"
+      );
+    }
+  };
 
   return (
     <SafeAreaView className="bg-secondry h-full">
@@ -24,33 +62,36 @@ export default function Signup() {
             Create an Account
           </Text>
 
-          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5  ">
+          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5 py-4 ">
             <Feather name="user" size={20} color="gray" className="mr-5" />
             <TextInput
               placeholder="User Name"
               placeholderTextColor="gray"
+              onChangeText={(text) => setName(text)}
               keyboardType="email-address"
-              className=" text-sixth py-4 font-semibold"
+              className=" text-sixth  font-semibold text-lg mb-1"
             />
           </View>
 
-          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5  ">
+          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5 py-4 ">
             <Feather name="mail" size={20} color="gray" className="mr-5" />
             <TextInput
               placeholder="Email"
               placeholderTextColor="gray"
               keyboardType="email-address"
-              className=" text-sixth py-4 font-semibold"
+              onChangeText={(text) => setEmail(text)}
+              className=" text-sixth  font-semibold text-lg mb-1"
             />
           </View>
 
-          <View className="w-full flex-row items-center rounded-xl mb-14 px-5 ">
+          <View className="w-full flex-row items-center rounded-xl mb-14 px-5 py-4 ">
             <Feather name="lock" size={20} color="gray" className="mr-5" />
             <TextInput
               placeholder="Password"
               placeholderTextColor="gray"
               secureTextEntry={!showPassword}
-              className="flex-1 text-sixth py-4 font-semibold"
+              onChangeText={(text) => setPassword(text)}
+              className="flex-1 text-sixth  font-semibold text-lg mb-1"
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <Feather
@@ -61,7 +102,10 @@ export default function Signup() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity className="flex items-center justify-center   w-full bg-primary py-4 rounded-xl mb-12">
+          <TouchableOpacity
+            className="flex items-center justify-center   w-full bg-primary py-4 rounded-xl mb-12"
+            onPress={handleSignup}
+          >
             <Text className="text-white text-center text-xl font-bold">
               Continue
             </Text>
@@ -73,7 +117,9 @@ export default function Signup() {
 
           <TouchableOpacity className="flex-row items-center justify-center space-x-2 mb-14">
             <FontAwesome name="google" size={20} color="gray" />
-            <Text className="text-fourth text-lg">Continue with Google</Text>
+            <Text className="text-fourth text-lg ml-2">
+              Continue with Google
+            </Text>
           </TouchableOpacity>
 
           <View className="flex-row items-center justify-center">

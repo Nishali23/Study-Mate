@@ -6,7 +6,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  TextInputProps,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
@@ -15,6 +14,38 @@ import { Feather, FontAwesome } from "@expo/vector-icons";
 export default function Signin() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://172.20.10.3:3000/api/v1/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Signed in successfully!");
+        router.push("/dashboard/home");
+      } else {
+        alert(data.message || "Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Sign-in error:", error);
+      alert("Something went wrong. Please try again.");
+    }
+  };
 
   return (
     <SafeAreaView className="bg-secondry h-full">
@@ -24,24 +55,29 @@ export default function Signin() {
             Welcome Back
           </Text>
 
-          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5  ">
+          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5 py-4  ">
             <Feather name="mail" size={20} color="gray" className="mr-5" />
             <TextInput
               placeholder="Email"
               placeholderTextColor="gray"
               keyboardType="email-address"
-              className=" text-sixth py-4 font-semibold"
+              className=" text-sixth font-semibold text-xl mb-1"
+              value={email}
+              onChangeText={setEmail}
             />
           </View>
 
-          <View className="w-full flex-row items-center rounded-xl mb-14 px-5 ">
+          <View className="w-full flex-row items-center rounded-xl mb-14 px-5 py-4 ">
             <Feather name="lock" size={20} color="gray" className="mr-5" />
             <TextInput
               placeholder="Password"
               placeholderTextColor="gray"
               secureTextEntry={!showPassword}
-              className="flex-1 text-sixth py-4 font-semibold"
+              className="flex-1 text-sixth  font-semibold text-xl mb-1"
+              value={password}
+              onChangeText={setPassword}
             />
+
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <Feather
                 name={showPassword ? "eye-off" : "eye"}
@@ -51,7 +87,10 @@ export default function Signin() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity className="flex items-center justify-center   w-full bg-primary py-4 rounded-xl mb-12">
+          <TouchableOpacity
+            className="flex items-center justify-center w-full bg-primary py-4 rounded-xl mb-12"
+            onPress={handleSignIn}
+          >
             <Text className="text-white text-center text-xl font-bold">
               Continue
             </Text>
@@ -69,7 +108,9 @@ export default function Signin() {
 
           <TouchableOpacity className="flex-row items-center justify-center space-x-2 mb-14">
             <FontAwesome name="google" size={20} color="gray" />
-            <Text className="text-fourth text-lg">Continue with Google</Text>
+            <Text className="text-fourth text-lg ml-2">
+              Continue with Google
+            </Text>
           </TouchableOpacity>
 
           <View className="flex-row items-center justify-center">
