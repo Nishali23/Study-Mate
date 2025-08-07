@@ -37,7 +37,7 @@ export default function Signin() {
 
       if (response.ok) {
         alert("Signed in successfully!");
-        router.push("/dashboard/home");
+        router.push("/Home/home");
       } else {
         alert(data.message || "Invalid email or password");
       }
@@ -96,8 +96,8 @@ export default function Signin() {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <Text className=" flex items-center justify-center text-primary mb-12 font-bold">
+          <TouchableOpacity onPress={() => router.push("/auth/forgotPassword")}>
+            <Text className=" flex items-center justify-center text-primary mb-12 font-bold text-lg">
               Forgot Password?
             </Text>
           </TouchableOpacity>

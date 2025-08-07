@@ -62,36 +62,36 @@ export default function Signup() {
             Create an Account
           </Text>
 
-          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5 py-4 ">
-            <Feather name="user" size={20} color="gray" className="mr-5" />
+          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5 py-2">
+            <Feather name="user" size={20} color="gray" className="mr-5 mt-3" />
             <TextInput
               placeholder="User Name"
               placeholderTextColor="gray"
               onChangeText={(text) => setName(text)}
               keyboardType="email-address"
-              className=" text-sixth  font-semibold text-lg mb-1"
+              className=" text-sixth  font-semibold text-lg   h-10"
             />
           </View>
 
-          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5 py-4 ">
-            <Feather name="mail" size={20} color="gray" className="mr-5" />
+          <View className="w-full flex-row items-center  rounded-xl mb-5 px-5 py-2 ">
+            <Feather name="mail" size={20} color="gray" className="mr-5 mt-3" />
             <TextInput
               placeholder="Email"
               placeholderTextColor="gray"
               keyboardType="email-address"
               onChangeText={(text) => setEmail(text)}
-              className=" text-sixth  font-semibold text-lg mb-1"
+              className=" text-sixth  font-semibold text-lg   h-10"
             />
           </View>
 
-          <View className="w-full flex-row items-center rounded-xl mb-14 px-5 py-4 ">
-            <Feather name="lock" size={20} color="gray" className="mr-5" />
+          <View className="w-full flex-row items-center rounded-xl mb-14 px-5 py-2 ">
+            <Feather name="lock" size={20} color="gray" className="mr-5 mt-3" />
             <TextInput
               placeholder="Password"
               placeholderTextColor="gray"
               secureTextEntry={!showPassword}
               onChangeText={(text) => setPassword(text)}
-              className="flex-1 text-sixth  font-semibold text-lg mb-1"
+              className="flex-1 text-sixth  font-semibold text-lg   h-10"
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <Feather
